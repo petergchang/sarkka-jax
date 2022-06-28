@@ -75,7 +75,7 @@ def plot_random_walk(t_grid, xs, ys, ms=None, ci=None):
     plt.legend(loc=3, borderpad=0.5, handlelength=4, fancybox=False, edgecolor='k');
     plt.show()
 
-def plot_trajectory(t_tr, x_tr, t_obs, x_obs, t_est, x_est):
+def plot_car_trajectory(t_tr, x_tr, t_obs, x_obs, t_est, x_est):
     plt.figure()
     plt.plot(t_tr, x_tr, color='darkgray', linewidth=2.5, label="True Trajectory")
     plt.plot(t_obs, x_obs, 'ok', fillstyle='none', ms=4, label='Measurements')
@@ -84,5 +84,19 @@ def plot_trajectory(t_tr, x_tr, t_obs, x_obs, t_est, x_est):
     plt.xlim(-1, 10); plt.ylim(-8, 2)
     plt.yticks(jnp.arange(-8, 2.1, 2))
     plt.gca().set_aspect(0.9)
+    plt.legend(loc=1, borderpad=0.5, handlelength=4, fancybox=False, edgecolor='k');
+    plt.show()
+
+def plot_pendulum(time_grid, x_tr, x_obs, x_est=None, est_type=""):
+    plt.figure()
+    plt.plot(time_grid, x_tr, color='darkgray', linewidth=4, label="True Angle")
+    plt.plot(time_grid, x_obs, 'ok', fillstyle='none', ms=1.5, label='Measurements')
+    if x_est is not None:
+        plt.plot(time_grid, x_est, color='k', linewidth=1.5, label=f"{est_type} Estimate")
+    plt.xlabel('Time $t$'); plt.ylabel('Pendulum angle $x_{1,k}$')
+    plt.xlim(0, 5); plt.ylim(-3, 5)
+    plt.xticks(jnp.arange(0.5, 4.6, 0.5))
+    plt.yticks(jnp.arange(-3, 5.1, 1))
+    plt.gca().set_aspect(0.5)
     plt.legend(loc=1, borderpad=0.5, handlelength=4, fancybox=False, edgecolor='k');
     plt.show()
