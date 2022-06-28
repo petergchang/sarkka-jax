@@ -1,7 +1,6 @@
 import jax.numpy as jnp
 import matplotlib.pyplot as plt
 
-# Chapter 3
 def plot_linreg(X, Y_tr, Y, estimate=None):    
     plt.figure()
     plt.plot(X, Y, 'k.', label='Measurements')
@@ -57,7 +56,6 @@ def plot_sine(X, Y_tr, Y, X_est=None, Y_est=None, xrlim=2., loc=1):
     plt.legend(loc=loc, borderpad=0.8, handlelength=4, fancybox=False, edgecolor='k');
     plt.show()
 
-# Chapter 4
 def plot_random_walk(t_grid, xs, ys, ms=None, ci=None):
     plt.figure()
     plt.plot(t_grid, xs, color='darkgray', linewidth=2.5, label="Signal")
@@ -75,4 +73,16 @@ def plot_random_walk(t_grid, xs, ys, ms=None, ci=None):
         plt.yticks(jnp.arange(-14, 7, 2))
         plt.gca().set_aspect(4)
     plt.legend(loc=3, borderpad=0.5, handlelength=4, fancybox=False, edgecolor='k');
+    plt.show()
+
+def plot_trajectory(t_tr, x_tr, t_obs, x_obs, t_est, x_est):
+    plt.figure()
+    plt.plot(t_tr, x_tr, color='darkgray', linewidth=2.5, label="True Trajectory")
+    plt.plot(t_obs, x_obs, 'ok', fillstyle='none', ms=4, label='Measurements')
+    plt.plot(t_est, x_est, color='k', linewidth=1.5, label="Filter Estimate")
+    plt.xlabel('Time step $k$'); plt.ylabel('$x_k$')
+    plt.xlim(-1, 10); plt.ylim(-8, 2)
+    plt.yticks(jnp.arange(-8, 2.1, 2))
+    plt.gca().set_aspect(0.9)
+    plt.legend(loc=1, borderpad=0.5, handlelength=4, fancybox=False, edgecolor='k');
     plt.show()
