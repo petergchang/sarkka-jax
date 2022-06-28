@@ -41,12 +41,14 @@ def plot_linreg_var_convergence(X, rvar1, rvar2, bvar1, bvar2):
     plt.legend(loc=1, borderpad=0.8, handlelength=4, fancybox=False, edgecolor='k');
     plt.grid(True, which="both", ls=':')
 
-def plot_sine(X, Y_tr, Y, estimate=None, xrlim=2., loc=1):
+def plot_sine(X, Y_tr, Y, X_est=None, Y_est=None, xrlim=2., loc=1):
+    if X_est is None:
+        X_est = X
     plt.figure()
     plt.plot(X, Y, 'k.', label='Measurements')
     plt.plot(X, Y_tr, color='silver', linewidth=7, label="True Signal")
-    if estimate is not None:
-        plt.plot(X, estimate, 'k-', linewidth=2, label="Estimate")
+    if Y_est is not None:
+        plt.plot(X_est, Y_est, 'k-', linewidth=2, label="Estimate")
     plt.xlabel('$t$'); plt.ylabel('$y$')
     plt.xlim(0, 2); plt.ylim(-1.5, 1.5)
     plt.xticks(jnp.arange(0, xrlim+0.1, 0.5))
