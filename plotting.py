@@ -56,3 +56,23 @@ def plot_sine(X, Y_tr, Y, X_est=None, Y_est=None, xrlim=2., loc=1):
     plt.gca().set_aspect(0.5)
     plt.legend(loc=loc, borderpad=0.8, handlelength=4, fancybox=False, edgecolor='k');
     plt.show()
+
+# Chapter 4
+def plot_random_walk(t_grid, xs, ys, ms=None, ci=None):
+    plt.figure()
+    plt.plot(t_grid, xs, color='darkgray', linewidth=2.5, label="Signal")
+    plt.plot(t_grid, ys, 'ok', fillstyle='none', ms=4, label='Measurements')
+    plt.xlabel('Time step $k$'); plt.ylabel('$x_k$')
+    plt.xlim(0, 100); plt.ylim(-11, 7)
+    plt.yticks(jnp.arange(-10, 7, 2))
+    plt.gca().set_aspect(4.5)
+    if ms is not None:
+        plt.plot(t_grid, ms, color='k', linewidth=1, label="Filter Estimate")
+        if ci is not None:
+            plt.plot(t_grid, ms-ci, 'k', dashes=[6,6], linewidth=1, label="95% Quantiles")
+            plt.plot(t_grid, ms+ci, 'k', linewidth=1, dashes=[6,6])
+        plt.ylim(-14, 7)
+        plt.yticks(jnp.arange(-14, 7, 2))
+        plt.gca().set_aspect(4)
+    plt.legend(loc=3, borderpad=0.5, handlelength=4, fancybox=False, edgecolor='k');
+    plt.show()
