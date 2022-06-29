@@ -71,7 +71,7 @@ def simulate_trajectory_with_default_params():
 def simulate_pendulum(m_0, f, h, Q, R, num_steps, key=0):
     if isinstance(key, int):
         key = jr.PRNGKey(key)
-    M = m_0.shape[-1]
+    M = m_0.shape[0]
 
     def _step(carry, rng):
         state = carry
@@ -88,13 +88,13 @@ def simulate_pendulum(m_0, f, h, Q, R, num_steps, key=0):
     return states, observations
 
 def simulate_pendulum_with_default_params():
-    m_0 = jnp.array([[jnp.pi/2, 0]])
+    m_0 = jnp.array([jnp.pi/2, 0])
     dt = 0.0125
     q = 1
     g = 9.8
     Q = jnp.array([[q*dt**3/3, q*dt**2/2],
                 [q*dt**2/2,      q*dt]])
     R = 0.3
-    f = lambda x: jnp.array([[x[0,0] + x[0,1]*dt, x[0,1] - g*jnp.sin(x[0,0])*dt]])
-    h = lambda x: jnp.array([jnp.sin(x[0,0])])
+    f = lambda x: jnp.array([x[0] + x[1]*dt, x[1] - g*jnp.sin(x[0])*dt])
+    h = lambda x: jnp.array([jnp.sin(x[0])])
     return simulate_pendulum(m_0, f, h, Q, R, num_steps=400)
