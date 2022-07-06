@@ -87,9 +87,9 @@ def simulate_pendulum(m_0, f, h, Q, R, num_steps, key=0):
     )
     return states, observations
 
-def simulate_pendulum_with_default_params():
+def simulate_pendulum_with_default_params(dt=0.0125):
     m_0 = jnp.array([jnp.pi/2, 0])
-    dt = 0.0125
+    dt = dt
     q = 1
     g = 9.8
     Q = jnp.array([[q*dt**3/3, q*dt**2/2],
