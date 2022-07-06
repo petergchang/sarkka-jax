@@ -3,6 +3,18 @@ import jax.numpy as jnp
 import jax.random as jr
 from jax import vmap
 from jax import lax
+import chex
+from typing import Callable
+
+@chex.dataclass
+class PendulumParams:
+    m_0: chex.Array
+    P_0: chex.Array
+    f: Callable
+    h: Callable
+    Q: chex.Array
+    R: chex.Array
+
 
 # 1-dimensional random walk simulation
 def simulate_rw_1d(init, Q, R, num_steps, key=0):
@@ -98,8 +110,15 @@ def pendulum_default_params(dt=0.0125):
     R = 0.3
     f = lambda x: jnp.array([x[0] + x[1]*dt, x[1] - g*jnp.sin(x[0])*dt])
     h = lambda x: jnp.array([jnp.sin(x[0])])
-    return (m_0, P_0, f, h, Q, R)
+    return PendulumParams(
+        m_0 = m_0,
+        P_0 = P_0,
+        f = f,
+        h = h,
+        Q = Q,
+        R = R
+    )
 
 def simulate_pendulum_with_default_params(dt=0.0125):
-    m_0, _, f, h, Q, R = pendulum_default_params(dt=dt)
+    m_0, _, f, h, Q, R = pendulum_default_params(dt=dt).to_tuple()
     return simulate_pendulum(m_0, f, h, Q, R, num_steps=400)
