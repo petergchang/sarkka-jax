@@ -119,6 +119,7 @@ def pendulum_default_params(dt=0.0125):
         R = R
     )
 
-def simulate_pendulum_with_default_params(dt=0.0125):
+def simulate_pendulum_with_default_params(dt=0.0125, num_steps=400):
+    time_grid = jnp.arange(0.0, dt*num_steps, step=dt)
     m_0, _, f, h, Q, R = pendulum_default_params(dt=dt).to_tuple()
-    return simulate_pendulum(m_0, f, h, Q, R, num_steps=400)
+    return time_grid, simulate_pendulum(m_0, f, h, Q, R, num_steps)
