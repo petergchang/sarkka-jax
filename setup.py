@@ -10,6 +10,7 @@ setup(
     install_requires=[
         "jax",
         "jaxlib",
+        "sklearn",
         "chex"
     ],
     packages=setuptools.find_packages(),
