@@ -87,8 +87,9 @@ def simulate_pendulum(m_0, f, h, Q, R, num_steps, key=0):
     )
     return states, observations
 
-def simulate_pendulum_with_default_params(dt=0.0125):
+def pendulum_default_params(dt=0.0125):
     m_0 = jnp.array([jnp.pi/2, 0])
+    P_0 = jnp.eye(2) * 0.1
     dt = dt
     q = 1
     g = 9.8
@@ -97,4 +98,8 @@ def simulate_pendulum_with_default_params(dt=0.0125):
     R = 0.3
     f = lambda x: jnp.array([x[0] + x[1]*dt, x[1] - g*jnp.sin(x[0])*dt])
     h = lambda x: jnp.array([jnp.sin(x[0])])
+    return (m_0, P_0, f, h, Q, R)
+
+def simulate_pendulum_with_default_params(dt=0.0125):
+    m_0, _, f, h, Q, R = pendulum_default_params(dt=dt)
     return simulate_pendulum(m_0, f, h, Q, R, num_steps=400)
